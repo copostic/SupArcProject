@@ -39,6 +39,11 @@ unsigned char joypad1test;
 unsigned char joypad2; 
 unsigned char joypad2old;
 unsigned char joypad2test;
+unsigned char ball_x; 
+unsigned char ball_y; 
+unsigned char vector_ball_x; 
+unsigned char vector_ball_y;
+
 
 #pragma bss-name(push, "OAM")
 unsigned char SPRITES[256];
