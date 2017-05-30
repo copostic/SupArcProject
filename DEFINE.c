@@ -59,7 +59,7 @@ const unsigned char MetaSprite_Tile[] = { // tile numbers
 	6, 7, 0x16, 0x17, // left
 	4, 5, 0x14, 0x15}; // up
 	
-enum {Going_Right, Going_Down, Going_Left, Going_Up};
+enum {ball, paddle, Going_Left, Going_Up};
 
 
 const unsigned char MetaSprite_Attrib[] = {0, 0, 0, 0}; 

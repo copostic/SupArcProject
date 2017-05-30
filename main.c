@@ -75,7 +75,7 @@ void Load_Palette (void) {
 
 
 void update_Sprites (void) {
-	state4 = Going_Down << 2; // same as state * 4
+	state4 = paddle << 2; // same as state * 4
 	index4 = 0;
 	for (index = 0; index < 4; ++index ){
 		SPRITES[index4] = MetaSprite_Y[index] + Y1; // relative y + master y
@@ -87,7 +87,7 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + X1; // relative x + master x
 		++index4;
 	}
-	state4 = Going_Right << 2; // same as state * 4
+	state4 = ball << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
 		SPRITES[index4] = MetaSprite_Y[index] + B1; // relative y + master y
 		++index4;
@@ -104,13 +104,13 @@ void update_Sprites (void) {
 void move_logic (void) {
 	if (X1 <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
-			state = Going_Right;
+			state = paddle;
 			X1=X1+3;
 		
 	}}
 	if (X1 >= 0x02 ){
 		if ((joypad1 & LEFT) != 0){
-			state = Going_Left;
+			state = paddle;
 			X1=X1-3;
 		
 	}}
