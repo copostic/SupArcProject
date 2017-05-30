@@ -21,10 +21,11 @@ void Get_Input (void);
 
 void main (void) {
 	All_Off();		// turn off screen
-	X1 = 0x7f;		// set the starting position of the top left sprite
-	Y1 = 0xc8;		// middle of screen
-	A1 = 0x7f; 
-	B1 = 0xb8;
+	paddle_x = 0x7f;		// set the starting position of the top left sprite
+	paddle_y = 0xc8;		
+	ball_x = 0x7f; 
+	ball_y = 0x7f;
+	vector_ball_y = 1; 
 	Load_Palette();
 	Reset_Scroll();
 	All_On(); 		// turn on screen
@@ -78,40 +79,60 @@ void update_Sprites (void) {
 	state4 = paddle << 2; // same as state * 4
 	index4 = 0;
 	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + Y1; // relative y + master y
+		SPRITES[index4] = MetaSprite_Y[index] + paddle_y; // relative y + master y
 		++index4;
 		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
 		++index4;
 		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
 		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + X1; // relative x + master x
+		SPRITES[index4] = MetaSprite_X[index] + paddle_x; // relative x + master x
 		++index4;
 	}
 	state4 = ball << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + B1; // relative y + master y
+		SPRITES[index4] = MetaSprite_Y[index] + ball_y; // relative y + master y
 		++index4;
 		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
 		++index4;
 		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
 		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + A1; // relative x + master x
+		SPRITES[index4] = MetaSprite_X[index] + ball_x; // relative x + master x
 		++index4;
 	}
 }
 
 
+
 void move_logic (void) {
-	if (X1 <= 0xea){
+	if (paddle_x <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
 			state = paddle;
-			X1=X1+3;
+			paddle_x=paddle_x+3;
 		
 	}}
-	if (X1 >= 0x02 ){
+	if (paddle_x >= 0x02 ){
 		if ((joypad1 & LEFT) != 0){
 			state = paddle;
-			X1=X1-3;
+			paddle_x=paddle_x-3;
 		
 	}}
+	if (ball_y <= 0x01){
+		vector_ball_y=1; 
+	}
+	if (ball_y == paddle_y && (paddle_x) <= ball_x && ball_x <= (paddle_x+16) ){
+		vector_ball_y = 2; 
+
+	}
+	if (vector_ball_y == 1 ){
+		++ball_y; // la balle monte
+	}
+	if (vector_ball_y == 2 ){
+		--ball_y; // la balle descend
+	}
+	if (vector_ball_x == 1 ){
+		++ball_x; 
+	}
+	if (vector_ball_x == 2 ){
+		--ball_x; 
+	}
 }

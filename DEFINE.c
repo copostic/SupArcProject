@@ -27,10 +27,10 @@ unsigned char NMI_flag;
 unsigned char Frame_Count;
 unsigned char index;
 unsigned char index4;
-unsigned char X1;
-unsigned char Y1;
-unsigned char A1; 
-unsigned char B1; 
+unsigned char paddle_x;
+unsigned char paddle_y;
+unsigned char ball_x; 
+unsigned char ball_y; 
 unsigned char state;
 unsigned char state4;
 unsigned char joypad1;
@@ -42,7 +42,7 @@ unsigned char joypad2test;
 unsigned char ball_x; 
 unsigned char ball_y; 
 unsigned char vector_ball_x; 
-unsigned char vector_ball_y;
+unsigned char vector_ball_y; 
 
 
 #pragma bss-name(push, "OAM")
