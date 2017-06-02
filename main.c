@@ -1,7 +1,7 @@
 // main.c 
 // 2ARC Project
 // Corentin Postic, Aymeric Nosjean, Raphael Saladini, Romain 
-.
+
 
 
 
@@ -13,16 +13,13 @@ void Get_Input (void);
 
 void main (void) {
 	All_Off();
-	tranche_gauche_balle = ball_x / 2-3; 
-	tranche_droite_balle = ball_x / 2+3;
-	tranche_gauche_paddle =  paddle_x / 2-8;
-	tranche_droite_paddle = paddle_x / 2+8;    									
+   									
 	paddle_x = 0x7f;		//Start position paddle x
 	paddle_y = 0xc8;		//Start position paddle y
 	ball_x = 0x7f; 			//Start position ball x
 	ball_y = 0x7f;			//Start position ball y
-	sprtie1x = 0x01; 
-	sprite1y = 0x01; 
+	//sprtie1x = 0x01; 
+	//sprite1y = 0x01; 
 	vector_ball_y = 1; 
 	Load_Palette();
 	Reset_Scroll();
@@ -92,7 +89,7 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + ball_x; // relative x + master x
 		++index4;
 	}
-	state4 = sprite1 << 2; // same as state * 4
+	/*state4 = sprite1 << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
 		SPRITES[index4] = MetaSprite_Y[index] + sprite1y; // relative y + master y
 		++index4;
@@ -102,12 +99,13 @@ void update_Sprites (void) {
 		++index4;
 		SPRITES[index4] = MetaSprite_X[index] + sprtie1x; // relative x + master x
 		++index4;
-	}
+	}*/
 }
 
 
 
 void move_logic (void) {
+
 	if (paddle_x <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
 			state = paddle;
@@ -123,7 +121,7 @@ void move_logic (void) {
 	if (ball_y <= 0x01) {
 		vector_ball_y=1; 
 	}
-	if (tranche_gauche_balle >= tranche_gauche_paddle && tranche_droite_balle <= tranche_droite_paddle) {
+	if (tranche_gauche_balle >= tranche_gauche_paddle && tranche_droite_balle <= tranche_droite_paddle && paddle_y == ball_y) {
 		vector_ball_y = 2;
 	}
 	if (vector_ball_y == 1 ) {
@@ -138,6 +136,11 @@ void move_logic (void) {
 	if (vector_ball_x == 2 ) {
 		--ball_x; 
 	}
+
+	tranche_gauche_balle = (ball_x / 2) - 3; 
+	tranche_droite_balle = (ball_x / 2) + 3;
+	tranche_gauche_paddle = (paddle_x / 2) - 8;
+	tranche_droite_paddle = (paddle_x / 2) + 8 ; 
 }
 
 

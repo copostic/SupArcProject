@@ -60,9 +60,7 @@ unsigned char SPRITES[256];
 
 const unsigned char PALETTE[]={
 0x28, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
-0x00, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0}; 
-// 0x28 : couleur gris
-// 0x00 : couleurs gris
+0x00, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0}; // 0x28 : couleur gris
 
 const unsigned char MetaSprite_Y[] = {0, 0, 8, 8}; // relative y coordinates
 
@@ -72,7 +70,7 @@ const unsigned char MetaSprite_Tile[] = { // tile numbers
 	6, 7, 0x16, 0x17, // left
 	4, 5, 0x14, 0x15}; // up
 	
-enum {ball, paddle, sprit1, Going_Up};
+enum {ball, paddle, Going_Left, Going_Up};
 
 
 const unsigned char MetaSprite_Attrib[] = {0, 0, 0, 0}; 
