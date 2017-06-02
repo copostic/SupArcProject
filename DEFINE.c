@@ -48,6 +48,17 @@ unsigned char tranche_droite_balle;
 unsigned char tranche_droite_paddle; 
 unsigned char tranche_gauche_paddle;
 unsigned char ball1_x;
+unsigned char sprite1_x;
+unsigned char sprite1_y;
+unsigned char sprite2_x;
+unsigned char sprite2_y;
+unsigned char sprite3_x;
+unsigned char sprite3_y; 
+unsigned char sprite4_x;
+unsigned char sprite4_y; 
+unsigned char sprite5_x;
+unsigned char sprite5_y; 
+
 // unsigned char 
 
 
@@ -70,7 +81,7 @@ const unsigned char MetaSprite_Tile[] = { // tile numbers
 	6, 7, 0x16, 0x17, // left
 	4, 5, 0x14, 0x15}; // up
 	
-enum {ball, paddle, Going_Left, Going_Up};
+enum {ball, paddle, sprite1, sprite2, Going_Up};
 
 
 const unsigned char MetaSprite_Attrib[] = {0, 0, 0, 0}; 
