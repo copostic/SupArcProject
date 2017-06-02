@@ -42,7 +42,13 @@ unsigned char joypad2test;
 unsigned char ball_x; 
 unsigned char ball_y; 
 unsigned char vector_ball_x; 
-unsigned char vector_ball_y; 
+unsigned char vector_ball_y;
+unsigned char tranche_gauche_balle;
+unsigned char tranche_droite_balle; 
+unsigned char tranche_droite_paddle; 
+unsigned char tranche_gauche_paddle;
+unsigned char ball1_x;
+// unsigned char 
 
 
 #pragma bss-name(push, "OAM")
@@ -54,7 +60,9 @@ unsigned char SPRITES[256];
 
 const unsigned char PALETTE[]={
 0x28, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
-0x99, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0};
+0x00, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0}; 
+// 0x28 : couleur gris
+// 0x00 : couleurs gris
 
 const unsigned char MetaSprite_Y[] = {0, 0, 8, 8}; // relative y coordinates
 
@@ -64,7 +72,7 @@ const unsigned char MetaSprite_Tile[] = { // tile numbers
 	6, 7, 0x16, 0x17, // left
 	4, 5, 0x14, 0x15}; // up
 	
-enum {ball, paddle, Going_Left, Going_Up};
+enum {ball, paddle, sprit1, Going_Up};
 
 
 const unsigned char MetaSprite_Attrib[] = {0, 0, 0, 0}; 

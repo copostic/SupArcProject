@@ -1,38 +1,35 @@
-/*	for cc65, for NES
- *	constructs a simple metasprite, gets input, and moves him around
- *	doug fraker 2015
- *	feel free to reuse any code here
- */
+// main.c 
+// 2ARC Project
+// Corentin Postic, Aymeric Nosjean, Raphael Saladini, Romain 
+.
 
 
 
 #include "DEFINE.c"
-//defines variables, constants, and function prototypes
+
 
 void Get_Input (void); 
-/*	this calls an asm function, written in asm4c.s
- *	it will read both joypads and store their reads in joypad1 and joypad2
- *	The buttons come in the order of A, B, Select, Start, Up, Down, Left, Right
- */
-
-
-
 
 
 void main (void) {
-	All_Off();		// turn off screen
-	paddle_x = 0x7f;		// set the starting position of the top left sprite
-	paddle_y = 0xc8;		
-	ball_x = 0x7f; 
-	ball_y = 0x7f;
+	All_Off();
+	tranche_gauche_balle = ball_x / 2-3; 
+	tranche_droite_balle = ball_x / 2+3;
+	tranche_gauche_paddle =  paddle_x / 2-8;
+	tranche_droite_paddle = paddle_x / 2+8;    									
+	paddle_x = 0x7f;		//Start position paddle x
+	paddle_y = 0xc8;		//Start position paddle y
+	ball_x = 0x7f; 			//Start position ball x
+	ball_y = 0x7f;			//Start position ball y
+	sprtie1x = 0x01; 
+	sprite1y = 0x01; 
 	vector_ball_y = 1; 
 	Load_Palette();
 	Reset_Scroll();
-	All_On(); 		// turn on screen
-	while (1){ 		// infinite loop
-		while (NMI_flag == 0); // wait till NMI
+	All_On(); 		// Screen on
+	while (1){ 	
+		while (NMI_flag == 0); 
 		
-		//every_frame();	// moved this to the nmi code in reset.s for greater stability
 		Get_Input();
 		move_logic();
 		update_Sprites();
@@ -40,10 +37,6 @@ void main (void) {
 		NMI_flag = 0;
 	}
 }
-	
-// inside the startup code, the NMI routine will ++NMI_flag and ++Frame_Count at each V-blank
-	
-	
 	
 	
 void All_Off (void) {
@@ -99,6 +92,17 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + ball_x; // relative x + master x
 		++index4;
 	}
+	state4 = sprite1 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite1y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprtie1x; // relative x + master x
+		++index4;
+	}
 }
 
 
@@ -116,23 +120,24 @@ void move_logic (void) {
 			paddle_x=paddle_x-3;
 		
 	}}
-	if (ball_y <= 0x01){
+	if (ball_y <= 0x01) {
 		vector_ball_y=1; 
 	}
-	if (ball_y == paddle_y && (paddle_x) <= ball_x && ball_x <= (paddle_x+16) ){
-		vector_ball_y = 2; 
-
+	if (tranche_gauche_balle >= tranche_gauche_paddle && tranche_droite_balle <= tranche_droite_paddle) {
+		vector_ball_y = 2;
 	}
-	if (vector_ball_y == 1 ){
+	if (vector_ball_y == 1 ) {
 		++ball_y; // la balle monte
 	}
-	if (vector_ball_y == 2 ){
+	if (vector_ball_y == 2 ) {
 		--ball_y; // la balle descend
 	}
-	if (vector_ball_x == 1 ){
+	if (vector_ball_x == 1 ) {
 		++ball_x; 
 	}
-	if (vector_ball_x == 2 ){
+	if (vector_ball_x == 2 ) {
 		--ball_x; 
 	}
 }
+
+
