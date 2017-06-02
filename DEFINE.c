@@ -53,8 +53,8 @@ unsigned char SPRITES[256];
 
 
 const unsigned char PALETTE[]={
-0x19, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
-0x19, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0};
+0x28, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
+0x99, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0};
 
 const unsigned char MetaSprite_Y[] = {0, 0, 8, 8}; // relative y coordinates
 
