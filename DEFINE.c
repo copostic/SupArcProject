@@ -57,7 +57,7 @@ unsigned char sprite3_y;
 unsigned char sprite4_x;
 unsigned char sprite4_y; 
 unsigned char sprite5_x;
-unsigned char sprite5_y; 
+unsigned char sprite5_y;
 
 // unsigned char 
 

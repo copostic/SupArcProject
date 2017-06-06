@@ -12,12 +12,16 @@ void Get_Input (void);
 
 
 void main (void) {
-	All_Off();
+	All_Off(); //Remet les constantes d'affichage à 0
    									
-	paddle_x = 0x7f;		//Start position paddle x
-	paddle_y = 0xc8;		//Start position paddle y
-	ball_x = 0x7f; 			//Start position ball x
-	ball_y = 0x7f;			//Start position ball y
+	//Définit la position de base
+    // du paddle et de la balle
+    paddle_x = 0x7f;
+	paddle_y = 0xc8;
+	ball_x = 0x7f;		
+	ball_y = 0x7f;       
+    
+    
 	sprite1_x = 0x7f; 
 	sprite1_y = 0x02;
 	sprite2_x = 0x9f; 
@@ -28,10 +32,10 @@ void main (void) {
 	sprite4_y = 0x02;
 	sprite5_x = 0x44;
 	sprite5_y = 0x33;
-	vector_ball_y = 1; 
+	vector_ball_y = 1; //Fait monter la balle
 	Load_Palette();
 	Reset_Scroll();
-	All_On(); 		// Screen on
+	All_On(); 		// Activation de l'écran
 	while (1){ 	
 		while (NMI_flag == 0); 
 		
@@ -157,42 +161,86 @@ void update_Sprites (void) {
 
 
 void move_logic (void) {
+    
+    //Mise à jour de la position 
+    //des tranches du paddle et de la balle
+    tranche_gauche_balle = (ball_x / 2) - 3; 
+	tranche_droite_balle = (ball_x / 2) + 3;
+	tranche_gauche_paddle = (paddle_x / 2) - 8;
+	tranche_droite_paddle = (paddle_x / 2) + 8 ; 
 
+    //Vérifie que le paddle
+    //ne dépasse pas les bords de l'écran
 	if (paddle_x <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
 			state = paddle;
 			paddle_x=paddle_x+3;
-		
 	}}
 	if (paddle_x >= 0x02 ){
 		if ((joypad1 & LEFT) != 0){
 			state = paddle;
 			paddle_x=paddle_x-3;
-		
 	}}
+    
+
+    
+    //Check la collision avec le bord du haut
 	if (ball_y <= 0x01) {
 		vector_ball_y=1; 
 	}
-	if (tranche_gauche_balle >= tranche_gauche_paddle && tranche_droite_balle <= tranche_droite_paddle && paddle_y == ball_y) {
+    
+    
+    //Check la collision avec les côtés
+    if (tranche_gauche_balle <= 0x00){
+        vector_ball_x=2;
+    }
+    if (tranche_droite_balle >= 0x64){
+        vector_ball_x=1;
+    }
+
+    //Check la collision avec le centre du paddle
+	if (tranche_gauche_balle >= tranche_gauche_paddle+2 && tranche_droite_balle <= tranche_droite_paddle-2 && paddle_y-4 == ball_y) {
 		vector_ball_y = 2;
+        vector_ball_x = 0;
+        
 	}
+    
+    //Check la collision avec la gauche du paddle
+    if (tranche_gauche_balle >= tranche_gauche_paddle && tranche_gauche_balle <= tranche_gauche_paddle+2 && paddle_y-4 == ball_y) {
+		vector_ball_y = 2;
+        vector_ball_x = 1;//Gauche
+	}
+    
+    //Check la collision avec la droite du paddle
+    if (tranche_droite_balle >= tranche_droite_paddle-2 && tranche_droite_balle <= tranche_droite_paddle && paddle_y-4 == ball_y) {
+		vector_ball_y = 2;
+        vector_ball_x = 2;//Droite
+	}
+    
+
+    
+    
+    //Fait monter/descendre la balle
+    //en fonction de la valeur de vector_ball_y
 	if (vector_ball_y == 1 ) {
 		++ball_y; // la balle monte
-	}
+	}    
 	if (vector_ball_y == 2 ) {
 		--ball_y; // la balle descend
 	}
+    
+    //Bouge la balle à gauche et à droite
+    //en fonction de la valeur de vector_ball_x
 	if (vector_ball_x == 1 ) {
-		++ball_x; 
+		--ball_x; //la balle va à gauche
 	}
+    
+    
 	if (vector_ball_x == 2 ) {
-		--ball_x; 
+		++ball_x; //la balle va à droite
 	}
 
-	tranche_gauche_balle = (ball_x / 2) - 3; 
-	tranche_droite_balle = (ball_x / 2) + 3;
-	tranche_gauche_paddle = (paddle_x / 2) - 8;
-	tranche_droite_paddle = (paddle_x / 2) + 8 ; 
+
 }
 
 
