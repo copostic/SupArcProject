@@ -2,17 +2,13 @@
 // 2ARC Project
 // Corentin Postic, Aymeric Nosjean, Raphael Saladini, Romain 
 
-
-
-
 #include "DEFINE.c"
 
 
 void Get_Input (void); 
 
-
 void main (void) {
-	All_Off(); //Remet les constantes d'affichage à 0
+	All_Off(); //Remet les variables d'affichage à 0
    									
 	//Définit la position de base
     // du paddle et de la balle
@@ -36,13 +32,19 @@ void main (void) {
 	Load_Palette();
 	Reset_Scroll();
 	All_On(); 		// Activation de l'écran
-	while (1){ 	
+    game_status=1;
+    while((joypad1 & A_BUTTON) == 0){Get_Input();}
+    
+	while (game_status == 1){
+        if((joypad1 & START) != 0){
+            while((joypad1 & A_BUTTON) == 0){
+                Get_Input();
+            }
+        }
 		while (NMI_flag == 0); 
-		
 		Get_Input();
 		move_logic();
 		update_Sprites();
-		
 		NMI_flag = 0;
 	}
 }
@@ -52,7 +54,6 @@ void All_Off (void) {
 	PPU_CTRL = 0;
 	PPU_MASK = 0; 
 }
-	
 	
 void All_On (void) {
 	PPU_CTRL = 0x90; // screen is on, NMI on
@@ -169,8 +170,8 @@ void move_logic (void) {
 	tranche_gauche_paddle = (paddle_x / 2) - 8;
 	tranche_droite_paddle = (paddle_x / 2) + 8 ; 
 
-    //Vérifie que le paddle
-    //ne dépasse pas les bords de l'écran
+    //Mouvement du paddle
+    //Ne dépasse pas les bords
 	if (paddle_x <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
 			state = paddle;
@@ -192,31 +193,34 @@ void move_logic (void) {
     
     //Check la collision avec les côtés
     if (tranche_gauche_balle <= 0x00){
-        vector_ball_x=2;
+        vector_ball_x=2;// Haut
     }
-    if (tranche_droite_balle >= 0x64){
-        vector_ball_x=1;
+    if (tranche_droite_balle >= 0x78){
+        vector_ball_x=1;// Bas
     }
 
     //Check la collision avec le centre du paddle
 	if (tranche_gauche_balle >= tranche_gauche_paddle+2 && tranche_droite_balle <= tranche_droite_paddle-2 && paddle_y-4 == ball_y) {
-		vector_ball_y = 2;
-        vector_ball_x = 0;
+		vector_ball_y = 2;// Haut
+        vector_ball_x = 0;//Position initiale -> rectiligne
         
 	}
     
     //Check la collision avec la gauche du paddle
     if (tranche_gauche_balle >= tranche_gauche_paddle && tranche_gauche_balle <= tranche_gauche_paddle+2 && paddle_y-4 == ball_y) {
-		vector_ball_y = 2;
+		vector_ball_y = 2;// Haut
         vector_ball_x = 1;//Gauche
 	}
     
     //Check la collision avec la droite du paddle
     if (tranche_droite_balle >= tranche_droite_paddle-2 && tranche_droite_balle <= tranche_droite_paddle && paddle_y-4 == ball_y) {
-		vector_ball_y = 2;
+		vector_ball_y = 2;// Haut
         vector_ball_x = 2;//Droite
 	}
     
+    if(ball_y > paddle_y){
+        game_status=0;
+    }
 
     
     

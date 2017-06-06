@@ -58,6 +58,7 @@ unsigned char sprite4_x;
 unsigned char sprite4_y; 
 unsigned char sprite5_x;
 unsigned char sprite5_y;
+unsigned char game_status;
 
 // unsigned char 
 
@@ -70,7 +71,7 @@ unsigned char SPRITES[256];
 
 
 const unsigned char PALETTE[]={
-0x28, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
+0x00, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
 0x00, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0}; // 0x28 : couleur gris
 
 const unsigned char MetaSprite_Y[] = {0, 0, 8, 8}; // relative y coordinates
