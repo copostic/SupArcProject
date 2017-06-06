@@ -22,7 +22,7 @@ void main (void) {
 	sprite1_y = 0x02;
 	sprite2_x = 0x9f; 
 	sprite2_y = 0x02;
-	sprite3_x = 0x9f;
+	sprite3_x = 0x4f;
 	sprite3_y = 0x02;
 	sprite4_x = 0x24;
 	sprite4_y = 0x02;
