@@ -78,10 +78,10 @@ unsigned char sprite14_x;
 unsigned char sprite14_y;
 unsigned char sprite15_x;
 unsigned char sprite15_y;
-unsigned char sprite16_x;
+/*unsigned char sprite16_x;
 unsigned char sprite16_y;
 unsigned char sprite17_x;
-unsigned char sprite17_y;
+unsigned char sprite17_y;*/
 unsigned char game_status;
 
 // unsigned char 

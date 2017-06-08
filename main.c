@@ -46,10 +46,10 @@ void main (void) {
 	sprite14_y = 0x26; 
 	sprite15_x = 0x68; 
 	sprite15_y = 0x26; 
-	sprite16_x = 0x96; 
+	/*sprite16_x = 0x96; 
 	sprite16_y = 0x26; 
 	sprite17_x = 0xbe; 
-	sprite17_y = 0x26; 
+	sprite17_y = 0x26;*/ 
 
 	vector_ball_y = 1; //Fait monter la balle
 	Load_Palette();
@@ -257,6 +257,7 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + sprite13_x; // relative x + master x
 		++index4;
 	}
+	
 	state4 = sprite2 << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
 		SPRITES[index4] = MetaSprite_Y[index] + sprite14_y; // relative y + master y
@@ -279,7 +280,7 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + sprite15_x; // relative x + master x
 		++index4;
 	}
-		state4 = sprite2 << 2; // same as state * 4
+	/*	state4 = sprite2 << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
 		SPRITES[index4] = MetaSprite_Y[index] + sprite16_y; // relative y + master y
 		++index4;
@@ -290,7 +291,7 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + sprite16_x; // relative x + master x
 		++index4;
 	}
-			state4 = sprite2 << 2; // same as state * 4
+	state4 = sprite2 << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
 		SPRITES[index4] = MetaSprite_Y[index] + sprite17_y; // relative y + master y
 		++index4;
@@ -300,7 +301,7 @@ void update_Sprites (void) {
 		++index4;
 		SPRITES[index4] = MetaSprite_X[index] + sprite17_x; // relative x + master x
 		++index4;
-	}
+	}*/
 }
 
 
