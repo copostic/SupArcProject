@@ -42,7 +42,7 @@ void main (void) {
 	sprite12_y = 0x1a; 
 	sprite13_x = 0x24; 
 	sprite13_y = 0x1a; 
-	sprite14_x = 0x39; 
+	sprite14_x = 0x96; 
 	sprite14_y = 0x26; 
 	sprite15_x = 0x68; 
 	sprite15_y = 0x26; 
