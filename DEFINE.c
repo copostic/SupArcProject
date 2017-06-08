@@ -78,12 +78,10 @@ unsigned char sprite14_x;
 unsigned char sprite14_y;
 unsigned char sprite15_x;
 unsigned char sprite15_y;
-/*unsigned char sprite16_x;
-unsigned char sprite16_y;
-unsigned char sprite17_x;
-unsigned char sprite17_y;*/
 unsigned char game_status;
 
+unsigned char Spritex [] = {0x7f,0xaa,0x4f,0x24,0x68,0x39,0x96,0xbe,0x7f,0xaa,0x4f,0x24,0x96,0x68};
+unsigned char Spritey [] = {0x02,0x0e,0x1a,0x26}; 
 // unsigned char 
 
 

@@ -280,28 +280,6 @@ void update_Sprites (void) {
 		SPRITES[index4] = MetaSprite_X[index] + sprite15_x; // relative x + master x
 		++index4;
 	}
-	/*	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite16_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite16_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite17_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite17_x; // relative x + master x
-		++index4;
-	}*/
 }
 
 
