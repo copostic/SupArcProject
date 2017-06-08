@@ -20,14 +20,37 @@ void main (void) {
     
 	sprite1_x = 0x7f; 
 	sprite1_y = 0x02;
-	sprite2_x = 0x9f; 
-	sprite2_y = 0x02;
+	sprite2_x = 0xaa; // dernier sprite première ligne 
+	sprite2_y = 0x02; // dernier sprite première ligne
 	sprite3_x = 0x4f;
 	sprite3_y = 0x02;
 	sprite4_x = 0x24;
 	sprite4_y = 0x02;
-	sprite5_x = 0x44;
-	sprite5_y = 0x33;
+	sprite7_x = 0x39; //premier sprite deuxième ligne
+	sprite7_y = 0x0e; //premier sprite deuxième ligne
+	sprite6_x = 0x68; //deuxième sprite deuxième ligne
+	sprite6_y = 0x0e; //deuxième sprite deuxième ligne
+	sprite8_x = 0x96; //troisième sprite deuxième ligne
+	sprite8_y = 0x0e; //troisième sprite deuxième ligne
+	sprite9_x = 0xbe; //Quatrième sprite deuxième ligne
+	sprite9_y = 0x0e; //Quatrième sprite deuxième ligne
+	sprite10_x = 0x7f; 
+	sprite10_y = 0x1a; 
+	sprite11_x = 0xaa; 
+	sprite11_y = 0x1a; 
+	sprite12_x = 0x4f; 
+	sprite12_y = 0x1a; 
+	sprite13_x = 0x24; 
+	sprite13_y = 0x1a; 
+	sprite14_x = 0x39; 
+	sprite14_y = 0x26; 
+	sprite15_x = 0x68; 
+	sprite15_y = 0x26; 
+	sprite16_x = 0x96; 
+	sprite16_y = 0x26; 
+	sprite17_x = 0xbe; 
+	sprite17_y = 0x26; 
+
 	vector_ball_y = 1; //Fait monter la balle
 	Load_Palette();
 	Reset_Scroll();
@@ -148,13 +171,134 @@ void update_Sprites (void) {
 	}
 	state4 = sprite2 << 2; // same as state * 4
 	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite5_y; // relative y + master y
+		SPRITES[index4] = MetaSprite_Y[index] + sprite6_y; // relative y + master y
 		++index4;
 		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
 		++index4;
 		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
 		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite5_x; // relative x + master x
+		SPRITES[index4] = MetaSprite_X[index] + sprite6_x; // relative x + master x
+		++index4;
+	}
+	state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite7_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite7_x; // relative x + master x
+		++index4;
+	}
+		state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite8_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite8_x; // relative x + master x
+		++index4;
+	}
+		state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite9_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite9_x; // relative x + master x
+		++index4;
+	}
+	state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite10_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite10_x; // relative x + master x
+		++index4;
+	}
+	state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite11_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite11_x; // relative x + master x
+		++index4;
+	}
+	state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite12_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite12_x; // relative x + master x
+		++index4;
+	}
+		state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite13_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite13_x; // relative x + master x
+		++index4;
+	}
+	state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite14_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite14_x; // relative x + master x
+		++index4;
+	}
+		state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite15_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite15_x; // relative x + master x
+		++index4;
+	}
+		state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite16_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite16_x; // relative x + master x
+		++index4;
+	}
+			state4 = sprite2 << 2; // same as state * 4
+	for (index = 0; index < 4; ++index ){
+		SPRITES[index4] = MetaSprite_Y[index] + sprite17_y; // relative y + master y
+		++index4;
+		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		++index4;
+		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		++index4;
+		SPRITES[index4] = MetaSprite_X[index] + sprite17_x; // relative x + master x
 		++index4;
 	}
 }
