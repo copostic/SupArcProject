@@ -21,23 +21,27 @@ void main (void) {
 	Load_Palette();
 	Reset_Scroll();
 	All_On(); 		// Activation de l'écran
-    game_status=1;
+
     while((joypad1 & A_BUTTON) == 0 && game_status == 1 ){Get_Input();}
-    
-	while (game_status == 1){
-        if((joypad1 & START) != 0){
-            while((joypad1 & A_BUTTON) == 0){
-                Get_Input();
-            }
+    while(1){
+        if (game_status == 0){
+            reset();
+            game_status = 1;
         }
-        Get_Input();
-		move_logic();
-        check_collision();
-		update_Sprites();
-		NMI_flag = 0;
-        //while(NMI_flag == 0); Ralenti la balle
-	}
+        
+        if (game_status == 1){
+            if((joypad1 & START) != 0){
+                while((joypad1 & A_BUTTON) == 0){Get_Input();}
+            }
+            Get_Input();
+            move_logic();
+            check_collision();
+		    update_Sprites();
+            NMI_flag = 0;
+        }
+    }
 }
+
 	
 	
 void All_Off (void) {
@@ -106,6 +110,7 @@ void update_Sprites (void) {
             ++index4;
         }
     }
+    
 }
 
 
@@ -196,14 +201,27 @@ void check_collision(void){
     //Check la collision avec les blocs
     if(ball_y < 0x36){
         for(i = 0; i < 13; i++){
-            if(tranche_gauche_balle >= (sprite_x[i] / 2)-8 && tranche_droite_balle <= (sprite_x[i]/2)+8 && ball_y == sprite_y[i]+8){
+            if(tranche_gauche_balle >= (sprite_x[i] / 2)-8 && tranche_droite_balle <= (sprite_x[i]/2)+8 && (ball_y == sprite_y[i]+8 || ball_y == sprite_y[i]-8) ){
                 sprite_x[i] = 0;
                 sprite_y[i] = 0xc8;
+                if (vector_ball_y == 2){
                 vector_ball_y = 1;
+                    }
+                else{
+                    vector_ball_y = 2;
+                }
                 count+=sprite_x[i];
                 if(i == 1 && count == 0){game_status = 0;}
-                break;
                }
         }
     }
+}
+
+void reset(void){
+    paddle_x = 0x7f;
+	paddle_y = 0xc8;
+	ball_x = 0x7f;		
+	ball_y = 0x7f;
+    vector_ball_x = 0;
+    vector_ball_y = 1;
 }
