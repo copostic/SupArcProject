@@ -28,6 +28,9 @@ void main (void) {
         if (game_status == 0){
             while((joypad1 & A_BUTTON) == 0){Get_Input();}
             reset();
+            for (i=0; i <13; i++){
+                collision_qty[i] = collision_qty_temp[i];
+            }
             game_status = 1;
         }
         
