@@ -1,6 +1,6 @@
 // main.c 
 // 2ARC Project
-// Corentin Postic, Aymeric Nosjean, Raphael Saladini, Romain 
+// Corentin Postic, Aymeric Nosjean, Raphael Saladini 
 
 #include "DEFINE.c"
 

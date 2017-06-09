@@ -5,7 +5,7 @@
 
 .segment "CODE"
 
-;due to dmc audio playback occasionally messing with input, it is best to read twice and compare them
+
 _Get_Input:
 	lda _joypad1
 	sta _joypad1old
@@ -18,7 +18,7 @@ _Get_Input:
 	stx $4016
 	
 	ldy #$08
-Get_Input2:		;get first read, store them as a test
+Get_Input2:		
 	lda $4016
 	and #$03
 	cmp #$01
@@ -31,13 +31,13 @@ Get_Input2:		;get first read, store them as a test
 	bne Get_Input2
 	
 GetInputFixBug:
-	ldx #$01	;restrobe strobe controller 1
+	ldx #$01	
 	stx $4016
 	dex
 	stx $4016
 	
 	ldy #$08
-Get_Input3:		;read again, store them as joypads
+Get_Input3:		
 	lda $4016
 	and #$03
 	cmp #$01
@@ -56,12 +56,12 @@ CompareInput:
 	lda _joypad2
 	cmp _joypad2test
 	bne :+
-	rts				;if same, done
+	rts				
 	
 :	lda _joypad1
 	sta _joypad1test
 	lda _joypad2
 	sta _joypad2test
 
-	jmp GetInputFixBug ;if different, reread
+	jmp GetInputFixBug 
 	
