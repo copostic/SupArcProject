@@ -17,6 +17,7 @@ void main (void) {
 	ball_x = 0x7f;		
 	ball_y = 0x7f;
     game_status = 1;
+    level = 1;
 	vector_ball_y = 1; //Fait monter la balle
 	Load_Palette();
 	Reset_Scroll();
@@ -130,12 +131,12 @@ void move_logic (void) {
 	if (paddle_x <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
 			state = paddle;
-			paddle_x=paddle_x+1;
+			++paddle_x;
 	}}
 	if (paddle_x >= 0x02 ){
 		if ((joypad1 & LEFT) != 0){
 			state = paddle;
-			paddle_x=paddle_x-1;
+			--paddle_x;
 	}}
     
     //Fait monter/descendre la balle
@@ -202,18 +203,26 @@ void check_collision(void){
     //Check la collision avec les blocs
     if(ball_y < 0x36){
         for(i = 0; i < 13; i++){
-            if(tranche_gauche_balle >= (sprite_x[i] / 2)-8 && tranche_droite_balle <= (sprite_x[i]/2)+8 && (ball_y == sprite_y[i]+8 || ball_y == sprite_y[i]-8) ){
-                sprite_x[i] = 0;
-                sprite_y[i] = 0xc8;
-                if (vector_ball_y == 2){
-                vector_ball_y = 1;
+            if(tranche_gauche_balle >= (sprite_x[i] / 2)-8 && tranche_droite_balle <= (sprite_x[i]/2)+8 && (ball_y == sprite_y[i]+8 || ball_y == sprite_y[i]-8)){
+                if (vector_ball_y == 2){ // Si la balle tape et monte elle descend
+                        vector_ball_y = 1;
                     }
-                else{
-                    vector_ball_y = 2;
+                    else{
+                        vector_ball_y = 2; // Sinon elle monte
+                    }
+                if(collision_qty[i] >= level){ // Si la balle est dans un bloc et que la qty de collision est atteinte
+                    sprite_x[i] = 0;
+                    sprite_y[i] = 0xc8;
+                    count+=sprite_x[i];
+                    if(i == 13 && count == 0){ 
+                        reset();  // Si toutes les cases sont effacées, reset l'écran
+                        level+=1; // Et augmente le niveau de jeu 
+                    }
                 }
-                count+=sprite_x[i];
-                if(i == 1 && count == 0){game_status = 0;}
-               }
+                else{
+                    collision_qty[i]++; //Sinon augmente la qty de collision
+                }
+            }
         }
     }
 }
