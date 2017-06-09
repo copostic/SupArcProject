@@ -46,7 +46,7 @@ unsigned char tranche_gauche_balle;
 unsigned char tranche_droite_balle; 
 unsigned char tranche_droite_paddle; 
 unsigned char tranche_gauche_paddle;
-unsigned char game_status = 1;
+unsigned char game_status;
 unsigned char i;
 unsigned char count;
 unsigned char sprite_x []    = {0x24,0x68,0x96,0xaa,0x38,0x5f,0x48,0x64,0x86,0x24,0x7f,0xaa};
@@ -96,4 +96,3 @@ void update_Sprites (void);
 void move_logic (void);
 void check_collision(void);
 void reset(void);
-

@@ -16,7 +16,7 @@ void main (void) {
 	paddle_y = 0xc8;
 	ball_x = 0x7f;		
 	ball_y = 0x7f;
-    
+    game_status = 1;
 	vector_ball_y = 1; //Fait monter la balle
 	Load_Palette();
 	Reset_Scroll();
@@ -25,6 +25,7 @@ void main (void) {
     while((joypad1 & A_BUTTON) == 0 && game_status == 1 ){Get_Input();}
     while(1){
         if (game_status == 0){
+            while((joypad1 & A_BUTTON) == 0){Get_Input();}
             reset();
             game_status = 1;
         }
@@ -224,4 +225,8 @@ void reset(void){
 	ball_y = 0x7f;
     vector_ball_x = 0;
     vector_ball_y = 1;
+    for (i=0; i <13; i++){
+        sprite_x[i]=sprite_x_temp[i];
+        sprite_y[i]=sprite_y_temp[i];
+    }
 }
