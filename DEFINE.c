@@ -32,7 +32,6 @@ unsigned char paddle_y;
 unsigned char ball_x; 
 unsigned char ball_y; 
 unsigned char state;
-unsigned char state4;
 unsigned char joypad1;
 unsigned char joypad1old;
 unsigned char joypad1test; 
@@ -47,42 +46,12 @@ unsigned char tranche_gauche_balle;
 unsigned char tranche_droite_balle; 
 unsigned char tranche_droite_paddle; 
 unsigned char tranche_gauche_paddle;
-unsigned char ball1_x;
-unsigned char sprite1_x;
-unsigned char sprite1_y;
-unsigned char sprite2_x;
-unsigned char sprite2_y;
-unsigned char sprite3_x;
-unsigned char sprite3_y; 
-unsigned char sprite4_x;
-unsigned char sprite4_y; 
-unsigned char sprite5_x;
-unsigned char sprite5_y;
-unsigned char sprite6_x;
-unsigned char sprite6_y;
-unsigned char sprite7_x;
-unsigned char sprite7_y;
-unsigned char sprite8_x;
-unsigned char sprite8_y;
-unsigned char sprite9_x;
-unsigned char sprite9_y;
-unsigned char sprite10_x;
-unsigned char sprite10_y;
-unsigned char sprite11_x;
-unsigned char sprite11_y;
-unsigned char sprite12_x;
-unsigned char sprite12_y;
-unsigned char sprite13_x;
-unsigned char sprite13_y;
-unsigned char sprite14_x;
-unsigned char sprite14_y;
-unsigned char sprite15_x;
-unsigned char sprite15_y;
 unsigned char game_status;
-
-unsigned char Spritex [] = {0x7f,0xaa,0x4f,0x24,0x68,0x39,0x96,0xbe,0x7f,0xaa,0x4f,0x24,0x96,0x68};
-unsigned char Spritey [] = {0x02,0x0e,0x1a,0x26}; 
-// unsigned char 
+unsigned char i;
+unsigned char count;
+unsigned char sprite_x []    = {0x24,0x68,0x96,0xaa,0x38,0x5f,0x48,0x64,0x86,0x24,0x7f,0xaa};
+unsigned char sprite_y []    = {0x02,0x02,0x02,0x0e,0x0e,0x0e,0x1a,0x1a,0x1a,0x26,0x26,0x26}; 
+unsigned char sprite_number; 
 
 
 #pragma bss-name(push, "OAM")
@@ -99,12 +68,11 @@ const unsigned char PALETTE[]={
 const unsigned char MetaSprite_Y[] = {0, 0, 8, 8}; // relative y coordinates
 
 const unsigned char MetaSprite_Tile[] = { // tile numbers
-	2, 3, 0x12, 0x13, // right
-	0, 1, 0x10, 0x11, // down
-	6, 7, 0x16, 0x17, // left
-	4, 5, 0x14, 0x15}; // up
-	
-enum {ball, paddle, sprite1, sprite2, Going_Up};
+    0, 1, 0x10, 0x11, // paddle
+	2, 3, 0x12, 0x13, // balle
+	4, 5, 0x14, 0x15, //sprite_brick
+	6, 7, 0x16, 0x17}; // sprite_grey
+enum {paddle, ball, sprite_brick, sprite_grey};
 
 
 const unsigned char MetaSprite_Attrib[] = {0, 0, 0, 0}; 
@@ -124,4 +92,5 @@ void Reset_Scroll (void);
 void Load_Palette (void);
 void update_Sprites (void);
 void move_logic (void);
+void check_collision(void);
 

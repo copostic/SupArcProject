@@ -15,48 +15,14 @@ void main (void) {
     paddle_x = 0x7f;
 	paddle_y = 0xc8;
 	ball_x = 0x7f;		
-	ball_y = 0x7f;       
+	ball_y = 0x7f;
     
-    
-	sprite1_x = 0x7f; 
-	sprite1_y = 0x02;
-	sprite2_x = 0xaa; // dernier sprite première ligne 
-	sprite2_y = 0x02; // dernier sprite première ligne
-	sprite3_x = 0x4f;
-	sprite3_y = 0x02;
-	sprite4_x = 0x24;
-	sprite4_y = 0x02;
-	sprite7_x = 0x39; //premier sprite deuxième ligne
-	sprite7_y = 0x0e; //premier sprite deuxième ligne
-	sprite6_x = 0x68; //deuxième sprite deuxième ligne
-	sprite6_y = 0x0e; //deuxième sprite deuxième ligne
-	sprite8_x = 0x96; //troisième sprite deuxième ligne
-	sprite8_y = 0x0e; //troisième sprite deuxième ligne
-	sprite9_x = 0xbe; //Quatrième sprite deuxième ligne
-	sprite9_y = 0x0e; //Quatrième sprite deuxième ligne
-	sprite10_x = 0x7f; 
-	sprite10_y = 0x1a; 
-	sprite11_x = 0xaa; 
-	sprite11_y = 0x1a; 
-	sprite12_x = 0x4f; 
-	sprite12_y = 0x1a; 
-	sprite13_x = 0x24; 
-	sprite13_y = 0x1a; 
-	sprite14_x = 0x96; 
-	sprite14_y = 0x26; 
-	sprite15_x = 0x68; 
-	sprite15_y = 0x26; 
-	/*sprite16_x = 0x96; 
-	sprite16_y = 0x26; 
-	sprite17_x = 0xbe; 
-	sprite17_y = 0x26;*/ 
-
 	vector_ball_y = 1; //Fait monter la balle
 	Load_Palette();
 	Reset_Scroll();
 	All_On(); 		// Activation de l'écran
     game_status=1;
-    while((joypad1 & A_BUTTON) == 0){Get_Input();}
+    while((joypad1 & A_BUTTON) == 0 && game_status == 1 ){Get_Input();}
     
 	while (game_status == 1){
         if((joypad1 & START) != 0){
@@ -64,11 +30,12 @@ void main (void) {
                 Get_Input();
             }
         }
-		while (NMI_flag == 0); 
-		Get_Input();
+        Get_Input();
 		move_logic();
+        check_collision();
 		update_Sprites();
 		NMI_flag = 0;
+        //while(NMI_flag == 0); Ralenti la balle
 	}
 }
 	
@@ -102,184 +69,43 @@ void Load_Palette (void) {
 
 
 void update_Sprites (void) {
-	state4 = paddle << 2; // same as state * 4
+	state = paddle << 2;
 	index4 = 0;
 	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + paddle_y; // relative y + master y
+		SPRITES[index4] = MetaSprite_Y[index] + paddle_y;
 		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		SPRITES[index4] = MetaSprite_Tile[index + state];
 		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		SPRITES[index4] = MetaSprite_Attrib[index];
 		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + paddle_x; // relative x + master x
+		SPRITES[index4] = MetaSprite_X[index] + paddle_x;
 		++index4;
 	}
-	state4 = ball << 2; // same as state * 4
+	state = ball << 2;
 	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + ball_y; // relative y + master y
+		SPRITES[index4] = MetaSprite_Y[index] + ball_y;
 		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
+		SPRITES[index4] = MetaSprite_Tile[index + state];
 		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
+		SPRITES[index4] = MetaSprite_Attrib[index];
 		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + ball_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite1_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite1_x; // relative x + master x
+		SPRITES[index4] = MetaSprite_X[index] + ball_x;
 		++index4;
 	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite2_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite2_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite3_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite3_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite4_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite4_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite6_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite6_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite7_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite7_x; // relative x + master x
-		++index4;
-	}
-		state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite8_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite8_x; // relative x + master x
-		++index4;
-	}
-		state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite9_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite9_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite10_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite10_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite11_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite11_x; // relative x + master x
-		++index4;
-	}
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite12_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite12_x; // relative x + master x
-		++index4;
-	}
-		state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite13_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite13_x; // relative x + master x
-		++index4;
-	}
-	
-	state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite14_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite14_x; // relative x + master x
-		++index4;
-	}
-		state4 = sprite2 << 2; // same as state * 4
-	for (index = 0; index < 4; ++index ){
-		SPRITES[index4] = MetaSprite_Y[index] + sprite15_y; // relative y + master y
-		++index4;
-		SPRITES[index4] = MetaSprite_Tile[index + state4]; // tile numbers
-		++index4;
-		SPRITES[index4] = MetaSprite_Attrib[index]; // attributes, all zero here
-		++index4;
-		SPRITES[index4] = MetaSprite_X[index] + sprite15_x; // relative x + master x
-		++index4;
-	}
+
+    for (sprite_number = 0; sprite_number < 12; sprite_number++){
+        state = sprite_brick << 2;
+        for (index = 0; index < 4; ++index ){
+            SPRITES[index4] = MetaSprite_Y[index] + sprite_y[sprite_number];
+            ++index4;
+            SPRITES[index4] = MetaSprite_Tile[index + state];
+            ++index4;
+            SPRITES[index4] = MetaSprite_Attrib[index];
+            ++index4;
+            SPRITES[index4] = MetaSprite_X[index] + sprite_x[sprite_number];
+            ++index4;
+        }
+    }
 }
 
 
@@ -298,16 +124,38 @@ void move_logic (void) {
 	if (paddle_x <= 0xea){
 		if ((joypad1 & RIGHT) != 0){
 			state = paddle;
-			paddle_x=paddle_x+3;
+			paddle_x=paddle_x+1;
 	}}
 	if (paddle_x >= 0x02 ){
 		if ((joypad1 & LEFT) != 0){
 			state = paddle;
-			paddle_x=paddle_x-3;
+			paddle_x=paddle_x-1;
 	}}
     
-
+    //Fait monter/descendre la balle
+    //en fonction de la valeur de vector_ball_y
+	if (vector_ball_y == 1 ) {
+		++ball_y; // la balle descend
+	}    
+	if (vector_ball_y == 2 ) {
+		--ball_y; // la balle monte
+	}
     
+    //Bouge la balle à gauche et à droite
+    //en fonction de la valeur de vector_ball_x
+	if (vector_ball_x == 1 ) {
+		--ball_x; //la balle va à gauche
+	}
+    
+    
+	if (vector_ball_x == 2 ) {
+		++ball_x; //la balle va à droite
+	}
+
+
+}
+
+void check_collision(void){
     //Check la collision avec le bord du haut
 	if (ball_y <= 0x01) {
 		vector_ball_y=1; 
@@ -316,10 +164,10 @@ void move_logic (void) {
     
     //Check la collision avec les côtés
     if (tranche_gauche_balle <= 0x00){
-        vector_ball_x=2;// Haut
+        vector_ball_x=2;// Droite
     }
     if (tranche_droite_balle >= 0x78){
-        vector_ball_x=1;// Bas
+        vector_ball_x=1;// Gauche
     }
 
     //Check la collision avec le centre du paddle
@@ -344,30 +192,18 @@ void move_logic (void) {
     if(ball_y > paddle_y){
         game_status=0;
     }
-
     
-    
-    //Fait monter/descendre la balle
-    //en fonction de la valeur de vector_ball_y
-	if (vector_ball_y == 1 ) {
-		++ball_y; // la balle monte
-	}    
-	if (vector_ball_y == 2 ) {
-		--ball_y; // la balle descend
-	}
-    
-    //Bouge la balle à gauche et à droite
-    //en fonction de la valeur de vector_ball_x
-	if (vector_ball_x == 1 ) {
-		--ball_x; //la balle va à gauche
-	}
-    
-    
-	if (vector_ball_x == 2 ) {
-		++ball_x; //la balle va à droite
-	}
-
-
+    //Check la collision avec les blocs
+    if(ball_y < 0x36){
+        for(i = 0; i < 13; i++){
+            if(tranche_gauche_balle >= (sprite_x[i] / 2)-8 && tranche_droite_balle <= (sprite_x[i]/2)+8 && ball_y == sprite_y[i]+8){
+                sprite_x[i] = 0;
+                sprite_y[i] = 0xc8;
+                vector_ball_y = 1;
+                count+=sprite_x[i];
+                if(i == 1 && count == 0){game_status = 0;}
+                break;
+               }
+        }
+    }
 }
-
-

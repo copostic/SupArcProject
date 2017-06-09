@@ -1,4 +1,4 @@
-;asm funtions that can be called by the c code. Written by Doug Fraker 2015.
+;fonctions asm qui permettent de communiquer avec les manettes de jeu.
 
 .importzp _joypad1, _joypad1old, _joypad1test, _joypad2, _joypad2old, _joypad2test
 .export _Get_Input
